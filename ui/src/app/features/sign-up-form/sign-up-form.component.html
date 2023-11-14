@@ -26,7 +26,7 @@
           class="first-name"
           name="firstName"
           required
-          placeholder="{{ 'registration.name_placeholder' | translate }}"
+          placeholder="{{ 'registration.first_name_placeholder' | translate }}"
         />
         <div class="err" *ngIf="form.controls.firstName.status === 'INVALID' && form.controls.firstName.touched && !form.value.firstName">
           {{ 'registration.name_restriction' | translate }}
@@ -42,10 +42,10 @@
           class="last-name"
           name="lastName"
           required
-          placeholder="{{ 'registration.name_placeholder' | translate }}"
+          placeholder="{{ 'registration.last_name_placeholder' | translate }}"
         />
         <div class="err" *ngIf="form.controls.lastName.status === 'INVALID' && form.controls.lastName.touched && !form.value.lastName">
-          {{ 'registration.name_restriction' | translate }}
+          {{ 'registration.last_name_restriction' | translate }}
         </div>
         <div class="err" *ngIf="form.value.lastName?.length > maxInputLength">
           {{ 'common.input_lengh_err' | translate }}
@@ -76,7 +76,10 @@
           required
           placeholder="{{ 'registration.password_placeholder' | translate }}"
         />
-        <div class="err" *ngIf="form.controls.password.status === 'INVALID' && form.controls.password.touched">
+        <div
+          class="err"
+          *ngIf="form.controls.password.status === 'INVALID' && form.controls.password.touched && form.controls.password.dirty"
+        >
           <span>{{ 'registration.password_restriction' | translate }}</span>
         </div>
       </div>
@@ -89,10 +92,18 @@
           required
           placeholder="{{ 'registration.confirm_password_placeholder' | translate }}"
         />
-        <div class="err" *ngIf="form.controls.password.status === 'INVALID' && form.controls.password.touched">
+        <div
+          class="err"
+          *ngIf="
+            !form.controls.confirmPassword.pristine && form.controls.confirmPassword.status === 'INVALID' && form.controls.password.touched
+          "
+        >
           <span>{{ 'registration.password_restriction' | translate }}</span>
         </div>
-        <div class="err" *ngIf="form.errors?.passwordMismatch && !form.get('confirmPassword').errors?.minlength">
+        <div
+          class="err"
+          *ngIf="!form.controls.confirmPassword.pristine && form.errors?.passwordMismatch && !form.get('confirmPassword').errors?.minlength"
+        >
           <span>{{ 'registration.password_dont_match' | translate }}</span>
         </div>
       </div>

@@ -24,7 +24,8 @@
     "type": "Type",
     "create": "Create",
     "unknown_error": "Sorry, something went wrong",
-    "input_lengh_err": "Max 50 symbols limit is reached"
+    "input_lengh_err": "Max 50 symbols limit is reached",
+    "forbiden_chars_err": "The name cannot contain the following special characters: ';', '/', '\\'"
   },
   "login": {
     "email": "E-mail",
@@ -47,6 +48,7 @@
     "password": "Password",
     "confirm_password": "Confirm Password",
     "password_restriction": "Minimum 8 characters",
+    "password_incorrect": "User's password is incorrect",
     "password_dont_match": "Passwords don't match",
     "name_restriction": "First name is required",
     "last_name_restriction": "Last name is required",
@@ -56,7 +58,8 @@
     "sign_up": "Sign Up",
     "statistics": "Allow to send anonymous statistics for product improvement",
     "more_info": "More info",
-    "name_placeholder": "Enter Name",
+    "first_name_placeholder": "Enter First Name",
+    "last_name_placeholder": "Enter Last Name",
     "password_placeholder": "Enter Password",
     "email_placeholder": "Enter E-mail",
     "confirm_password_placeholder": "Confirm Password"
@@ -272,6 +275,11 @@
     "new_account_login": "You have successfully created new account",
     "change_password_success": "Password has successfully been changed"
   },
+  "application": {
+    "created": "Application has successfully been created!",
+    "edited": "Application has successfully been edited!",
+    "deleted": "Application has successfully been deleted!"
+  },
   "create_application_wizard": {
     "application": {
       "title": "Create your application",
@@ -332,7 +340,18 @@
       "modal_bulk-delete_type": "Examples",
       "modal_bulk-delete_name": " item(s)",
       "control_button_tooltip": "Uploading is in process"
+    },
+    "confirmation_dialog": {
+      "delete_examples_confirmation_question": "Are you sure you want to delete these Examples? This action can not be undone.",
+      "delete_subject_confirmation_question": "Are you sure you want to delete this Subject? This action can not be undone."
     }
+  },
+  "Server_Status": {
+    "Admin": "Admin node",
+    "Api": "Api node",
+    "Core": "Core node",
+    "Loading": "loading ...",
+    "Title": "CompreFace is starting ..."
   },
   "month": {
     "January": "January",
@@ -351,6 +370,7 @@
   "tooltip": {
     "upload_new_image": "Upload new image",
     "clear_image": "Clear results",
-    "show_landmarks": "Show landmarks"
+    "show_landmarks": "Show landmarks",
+    "show_pose": "Show pose"
   }
 }

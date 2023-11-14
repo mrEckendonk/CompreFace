@@ -27,7 +27,7 @@ jobs:
         if [ "${{ github.event.inputs.environment }}" = "qa" ]; then
           echo "TAG_LATEST=master-latest" >> $GITHUB_ENV
         else
-          echo "TAG_LATEST=1.1.x-latest" >> $GITHUB_ENV
+          echo "TAG_LATEST=1.2.x-latest" >> $GITHUB_ENV
         fi   
     
     - name: Checkout Repo 
@@ -38,6 +38,7 @@ jobs:
       run: |
         sed -i "s|registry=|registry=${{ env.REGISTRY_PATH }}|g" .env
         sed -i "s/latest/${{ env.TAG_LATEST }}/g" .env
+        sed -i "s/uwsgi_processes=2/uwsgi_processes=1/g" .env
         sudo docker-compose stop
         sudo docker system prune -a -f
         sudo docker-compose pull

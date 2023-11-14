@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { CircleLoadingProgressEnum } from 'src/app/data/enums/circle-loading-progress.enum';
 import { SubjectModeEnum } from 'src/app/data/enums/subject-mode.enum';
 import { CollectionItem } from 'src/app/data/interfaces/collection';
@@ -42,6 +42,7 @@ export class CollectionManagerSubjectRightComponent implements OnChanges {
   @Input() collectionItems: CollectionItem[];
   @Input() mode = SubjectModeEnum.Default;
   @Input() defaultSubject: string;
+  @Input() maxImageSize: number;
 
   @Output() initApiKey = new EventEmitter<string>();
   @Output() readFiles = new EventEmitter<File[]>();
@@ -66,8 +67,11 @@ export class CollectionManagerSubjectRightComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const change = changes['collectionItems'];
-    if (change && change['currentValue'] !== change['previousValue']) {
+    this.checkUploadStatus(changes['collectionItems']);
+  }
+
+  checkUploadStatus(colleactionItems: SimpleChange): void {
+    if (colleactionItems && colleactionItems['currentValue'] !== colleactionItems['previousValue']) {
       const collectionOnHold = this.collectionItems.filter(item => item.status === CircleLoadingProgressEnum.OnHold);
 
       this.isCollectionOnHold = !!collectionOnHold.length;
@@ -94,12 +98,14 @@ export class CollectionManagerSubjectRightComponent implements OnChanges {
 
   onScrollDown(): void {
     const lastItem = this.uploadedExamples[this.uploadedExamples.length - 1];
-    const nextPage = lastItem['page'] + 1;
-    const totalPages = lastItem['totalPages'];
+    if (lastItem) {
+      const nextPage = lastItem['page'] + 1;
+      const totalPages = lastItem['totalPages'];
 
-    if (totalPages !== nextPage && !isNaN(nextPage)) {
-      this.prevItemCollection = this.collectionItems;
-      this.loadMore.emit(lastItem);
+      if (totalPages !== nextPage && !isNaN(nextPage)) {
+        this.prevItemCollection = this.collectionItems;
+        this.loadMore.emit(lastItem);
+      }
     }
   }
 }

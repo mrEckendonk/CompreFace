@@ -30,7 +30,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CreateDialogComponent } from 'src/app/features/create-dialog/create-dialog.component';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -55,6 +54,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { EditSubjectDialog } from './features/edit-subject/edit-subject-dialog.component';
 import { SideMenuModule } from './features/side-menu/side-menu.module';
 import { SpinnerModule } from './features/spinner/spinner.module';
+import { ServerStatusComponent } from './pages/server-status/server-status.component';
+import { NoCacheTranslateLoader } from './no-cache-translate-loader';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { SpinnerModule } from './features/spinner/spinner.module';
     DeleteDialogComponent,
     RoleEditDialogComponent,
     MergerDialogComponent,
+    ServerStatusComponent,
   ],
   imports: [
     BrowserModule,
@@ -98,7 +100,7 @@ import { SpinnerModule } from './features/spinner/spinner.module';
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (http: HttpClient) => new TranslateHttpLoader(http),
+        useFactory: (http: HttpClient) => new NoCacheTranslateLoader(http),
         deps: [HttpClient],
       },
     }),

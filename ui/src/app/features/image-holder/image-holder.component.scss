@@ -25,6 +25,9 @@
     top: 0.5rem;
     right: 0.5rem;
     z-index: 1;
+    padding-top: 2px;
+    border-radius: 8px;
+    background-color: $transparent-black;
 
     button {
       cursor: pointer;
@@ -43,6 +46,10 @@
         }
       }
     }
+
+    &:hover {
+      background-color: white;
+    }
   }
 
   img {
@@ -59,14 +66,6 @@
 }
 
 .selection-overlay {
-  @include wrapper-center();
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  backdrop-filter: blur(20px) brightness(0.6);
-
   input {
     position: absolute;
     top: 1rem;

@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - '1.1.x'
+      - '1.2.x'
 
 env:
   REGISTRY: ghcr.io
@@ -42,7 +42,7 @@ jobs:
       run: |
         if [ "${{ github.ref_name }}" = "master" ]; then
           echo "env_name=dev" >> $GITHUB_OUTPUT
-        elif [ "${{ github.ref_name }}" = "1.1.x" ]; then
+        elif [ "${{ github.ref_name }}" = "1.2.x" ]; then
           echo "env_name=stage" >> $GITHUB_OUTPUT
         else
           echo "env_name=Features" >> $GITHUB_OUTPUT
@@ -60,12 +60,15 @@ jobs:
         TAG_LATEST: ${{ steps.tag_vars.outputs.tag_latest }}
         REGISTRY_PATH: ${{ steps.registry_path.outputs.registry_path }}
       working-directory: ./dev
+      # use docker-compose build for 1.29.2
+      #     docker compose build for 2.15.0 (with buildkit enabled by default)
       run: |
+        docker compose version
         sed -i "s|registry=|registry=${REGISTRY_PATH}|g" .env
         sed -i "s/latest/${TAG}/g" .env
-        docker-compose build
+        docker compose build
         sed -i "s/${TAG}/${TAG_LATEST}/g" .env
-        docker-compose build
+        docker compose build
         docker images
 
     - name: Log in to the Container registry
@@ -105,6 +108,7 @@ jobs:
       run: |
         sed -i "s|registry=|registry=${REGISTRY_PATH}|g" .env
         sed -i "s/latest/${TAG_LATEST}/g" .env
+        sed -i "s/uwsgi_processes=2/uwsgi_processes=1/g" .env
         sudo docker-compose stop
         sudo docker system prune -a -f
         sudo docker-compose pull
